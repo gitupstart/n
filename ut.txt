@@ -13,6 +13,8 @@ mongodump --db myDatabase --out /backup/directory
 
 mongodump --db myDatabase --collection myCollection --out /backup/directory
 
+mongodump --db databasename --gzip --archive=filename.gz
+
 4)mongorestore
 mongorestore --db myDatabase /backup/directory/myDatabase
 
