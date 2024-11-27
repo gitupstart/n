@@ -1,0 +1,19 @@
+1)import
+mongoimport --db myDatabase --collection myCollection --file data.json --jsonArray
+
+mongoimport --db myDatabase --collection myCollection --type csv --file data.csv --headerline
+
+2)export
+mongoexport --db myDatabase --collection myCollection --out data.json --jsonArray
+
+mongoexport --db myDatabase --collection myCollection --type csv --out data.csv --fields "field1,field2,field3"
+
+3)dump
+mongodump --db myDatabase --out /backup/directory
+
+mongodump --db myDatabase --collection myCollection --out /backup/directory
+
+4)mongorestore
+mongorestore --db myDatabase /backup/directory/myDatabase
+
+mongorestore --db myDatabase --collection myCollection /backup/directory/myDatabase/myCollection.bson

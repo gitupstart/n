@@ -1,0 +1,76 @@
+1)match
+db.sales.aggregate([
+  { $match: { category: "Electronics" } }
+]);
+
+2)group
+db.sales.aggregate([
+  { 
+    $group: {
+      _id: "$category", // Group by category
+      totalQuantity: { $sum: "$quantity" }, // Total quantity for each category
+      avgPrice: { $avg: "$price" }         // Average price for each category
+    }
+  }
+]);
+
+3)sort
+db.sales.aggregate([
+  { $sort: { price: -1 } } // Sort by price in descending order
+]);
+
+4)project
+db.sales.aggregate([
+  { 
+    $project: {
+      product: 1, // Include the `product` field
+      totalCost: { $multiply: ["$price", "$quantity"] }, // Calculate total cost
+      _id: 0 // Exclude the `_id` field
+    }
+  }
+]);
+
+5)addfields
+db.sales.aggregate([
+  { 
+    $addFields: {
+      totalRevenue: { $multiply: ["$price", "$quantity"] } // Add a calculated field
+    }
+  }
+]);
+
+6)lookup
+db.sales.aggregate([
+  { 
+    $lookup: {
+      from: "categories",           // The other collection to join
+      localField: "category",       // Field in the current collection
+      foreignField: "_id",          // Field in the other collection
+      as: "categoryDetails"         // Output array field
+    }
+  }
+]);
+
+7)unwind
+db.sales.aggregate([
+  { 
+    $lookup: {
+      from: "categories",
+      localField: "category",
+      foreignField: "_id",
+      as: "categoryDetails"
+    }
+  },
+  { $unwind: "$categoryDetails" } // Break down the `categoryDetails` array
+]);
+
+8)limit
+db.sales.aggregate([
+  { $limit: 3 } // Return only the first 3 documents
+]);
+
+9)skip
+db.sales.aggregate([
+  { $skip: 2 } // Skip the first 2 documents
+]);
+

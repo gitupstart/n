@@ -1,0 +1,24 @@
+// Create a new user
+db.createUser({
+  user: "newUser",
+  pwd: "strongPassword",
+  roles: [
+    { role: "readWrite", db: "testDatabase" }
+  ]
+});
+
+// Assign the dbAdmin role
+db.grantRolesToUser("newUser", [
+  { role: "dbAdmin", db: "testDatabase" }
+]);
+
+// Revoke the readWrite role
+db.revokeRolesFromUser("newUser", [
+  { role: "readWrite", db: "testDatabase" }
+]);
+
+// Remove the user
+db.dropUser("newUser");
+
+//Authenticate
+mongo --username abirami --password abi@2005 --authenticationDatabase sem

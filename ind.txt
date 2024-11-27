@@ -1,0 +1,14 @@
+1)custom name index
+db.personData.createIndex({ age: 1 }, { name: "age_index" });
+
+2)unique
+db.personData.createIndex({ index: 1 }, { unique: true });
+
+3)compound
+db.personData.createIndex({ name: 1, eyeColor: 1 });
+
+4)explain
+db.personData.find({ age: { $gt: 25 } }).explain("executionStats");
+
+5)partialindex
+db.personData.createIndex({ age: 1 },{ partialFilterExpression: { age: { $gt: 25 } } });
